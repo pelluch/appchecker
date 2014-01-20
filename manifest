@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0
+apiversion: 2
+description: Simple Titanium module for checking if a given application is installed on Android
+author: Pablo Lluch
+license: Specify your license
+copyright: Pablo Lluch
+
+
+# these should not be edited
+name: appchecker
+moduleid: com.pelluch.appchecker
+guid: ac846d7d-8e54-43f1-8be6-3cd2b474f09f
+platform: android
+minsdk: 3.2.0.GA
