@@ -10,16 +10,20 @@ package com.pelluch.appchecker;
 
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
-
 import org.appcelerator.titanium.TiApplication;
-import org.appcelerator.kroll.common.Log;
+//import org.appcelerator.kroll.common.Log;
+
+import android.app.Activity;
+//import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 @Kroll.module(name="Appchecker", id="com.pelluch.appchecker")
 public class AppcheckerModule extends KrollModule
 {
 
 	// Standard Debugging variables
-	private static final String TAG = "AppcheckerModule";
+	//private static final String TAG = "AppcheckerModule";
 
 	// You can define constants with @Kroll.constant, for example:
 	// @Kroll.constant public static final String EXTERNAL_NAME = value;
@@ -28,34 +32,21 @@ public class AppcheckerModule extends KrollModule
 	{
 		super();
 	}
-
-	@Kroll.onAppCreate
-	public static void onAppCreate(TiApplication app)
-	{
-		Log.d(TAG, "inside onAppCreate");
-		// put module init code that needs to run when the application is created
-	}
-
-	// Methods
+	
 	@Kroll.method
-	public String example()
+	public boolean isPackageInstalled(String packageName)
 	{
-		Log.d(TAG, "example called");
-		return "hello world";
-	}
-	
-	// Properties
-	@Kroll.getProperty
-	public String getExampleProp()
-	{
-		Log.d(TAG, "get example property");
-		return "hello world";
-	}
-	
-	
-	@Kroll.setProperty
-	public void setExampleProp(String value) {
-		Log.d(TAG, "set example property: " + value);
+		TiApplication appContext = TiApplication.getInstance();
+		Activity activity = appContext.getCurrentActivity();
+		
+		PackageManager pm = activity.getPackageManager();
+		try {
+			pm.getPackageInfo(packageName, PackageManager.GET_META_DATA);
+			return true;
+		}
+		catch (NameNotFoundException e) {
+			return false;
+		}
 	}
 
 }
