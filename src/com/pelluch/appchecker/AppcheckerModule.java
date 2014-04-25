@@ -13,10 +13,14 @@ import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiApplication;
 //import org.appcelerator.kroll.common.Log;
 
+
+
 import android.app.Activity;
+import android.content.Intent;
 //import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 
 @Kroll.module(name="Appchecker", id="com.pelluch.appchecker")
 public class AppcheckerModule extends KrollModule
@@ -46,6 +50,18 @@ public class AppcheckerModule extends KrollModule
 		}
 		catch (NameNotFoundException e) {
 			return false;
+		}
+	}
+	
+	@Kroll.method
+	public void openPlayStore(String packageName)
+	{
+		TiApplication appContext = TiApplication.getInstance();
+		try {
+		    appContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+		} 
+		catch (android.content.ActivityNotFoundException anfe) {
+			appContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageName)));
 		}
 	}
 
